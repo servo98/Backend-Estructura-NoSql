@@ -15,7 +15,21 @@ const create = async (req, res) => {
   }
 };
 
-const getAll = async () => {};
+const getAll = async (_, res) => {
+  try {
+    const books = await Book.find();
+    return res.json({
+      msg: 'Libros encontrados',
+      books,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Error al consultar libros',
+      error,
+    });
+  }
+};
+
 const getById = async () => {};
 const updateById = async () => {};
 const deleteById = async () => {};
