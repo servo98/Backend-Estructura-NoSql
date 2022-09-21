@@ -1,4 +1,10 @@
 import { Book } from '../models/index.js';
+/**
+ * req.body
+ * req.headers
+ * req.params
+ * req.query
+ */
 
 const create = async (req, res) => {
   try {
@@ -30,8 +36,57 @@ const getAll = async (_, res) => {
   }
 };
 
-const getById = async () => {};
-const updateById = async () => {};
-const deleteById = async () => {};
+const getById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const book = await Book.findById(id);
+    if (!book) {
+      return res.status(404).json({
+        msg: 'Libro no encontrado',
+      });
+    }
+    return res.json({
+      msg: 'Libro encontrado',
+      book,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Error al obtener libro por id',
+      error,
+    });
+  }
+};
+
+const updateById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const book = await Book.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    return res.json({
+      msg: `Libro ${updatedBook.title} actualizado`,
+      book,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Error al actualizar libro',
+    });
+  }
+};
+
+const deleteById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Book.findByIdAndRemove(id);
+    return res.json({
+      msg: 'Libro libro borrado',
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Error al borrar libro por id',
+      error,
+    });
+  }
+};
 
 export { create, getAll, getById, updateById, deleteById };
