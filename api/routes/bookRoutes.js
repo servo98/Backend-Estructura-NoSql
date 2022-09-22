@@ -1,5 +1,6 @@
 import express from 'express';
 import { bookController } from '../controllers/index.js';
+import { createBookValidator } from '../middlewares/index.js';
 
 const router = express.Router();
 
@@ -12,7 +13,10 @@ const router = express.Router();
  * DELETE /books/:id
  */
 
-router.route('/books').post(bookController.create).get(bookController.getAll);
+router
+  .route('/books')
+  .post(createBookValidator, bookController.create)
+  .get(bookController.getAll);
 
 router
   .route('/books/:id')
