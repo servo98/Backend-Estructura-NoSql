@@ -64,7 +64,7 @@ const updateById = async (req, res) => {
       new: true,
     });
     return res.json({
-      msg: `Libro ${updatedBook.title} actualizado`,
+      msg: `Libro ${book.title} actualizado`,
       book,
     });
   } catch (error) {
