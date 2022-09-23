@@ -1,5 +1,5 @@
 import express from 'express';
-import { bookRoutes, authorRoutes } from './routes/index.js';
+import { bookRoutes, authorRoutes, authRoutes } from './routes/index.js';
 import { authValidator } from './middlewares/index.js';
 
 const api = express();
@@ -12,6 +12,8 @@ api.get('/status', (_, res) => {
     msg: 'API en linea y funcionando',
   });
 });
+
+api.use(authRoutes);
 
 api.use(authValidator);
 
