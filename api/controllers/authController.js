@@ -13,7 +13,7 @@ const register = async (req, res) => {
     const user = await User.create(req.body);
 
     //Borramos la pass para no mandarla en la respuesta
-    delete user.password;
+    user.password = undefined;
 
     return res.json({
       msg: 'Usuario registrao exitosamente',
@@ -22,6 +22,7 @@ const register = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       msg: 'Error al registrar usuario',
+      error,
     });
   }
 };
